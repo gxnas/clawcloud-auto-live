@@ -89,6 +89,12 @@ user1@gmail.com#主号----pass1----SECRET1&user2@qq.com#小号----pass2----SECRE
     *   定时：`0 12 * * 5` (每周五自动运行一次)
 3.  点击运行日志，查看执行情况。
 
+## 📂 文件结构
+
+*   `clawcloud_playwright_auto.py`: 主脚本文件
+*   `clawcloud_state.json`: 脚本自动生成的 Cookie 缓存文件 (自动生成，无需管理)
+*   `*.png`: 运行过程中生成的临时截图 (脚本运行结束会自动清理)
+
 ## ⚠️ 常见问题
 
 1.  **报错 `Network unreachable`**
