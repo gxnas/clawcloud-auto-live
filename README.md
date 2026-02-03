@@ -83,9 +83,9 @@ user1@gmail.com#主号----pass1----SECRET1&user2@qq.com#小号----pass2----SECRE
 
 ## 🚀 运行说明
 
-1.  将脚本 `clawcloud_arm64.py` 添加到青龙面板的脚本库或直接上传。
+1.  将脚本 `clawcloud_arm64.py` 添加到青龙面板的脚本库的clawcloud文件夹或直接上传脚本目录下的clawcloud文件夹。
 2.  添加定时任务：
-    *   命令：`task clawcloud_playwright_auto.py`
+    *   命令：`task clawcloud/clawcloud_playwright_auto.py`
     *   定时：`0 12 * * 5` (每周五自动运行一次)
 3.  点击运行日志，查看执行情况。
 
