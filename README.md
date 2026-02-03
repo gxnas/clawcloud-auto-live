@@ -15,28 +15,14 @@
 *   **智能代理 (国内环境优化)**：
     *   自动检测 `CLAW_PROXY` 或 `HTTP_PROXY` 环境变量。
     *   检测到代理时，自动配置浏览器和网络请求走代理，并自动处理 Docker 容器内的 `localhost` 连接问题，确保国内网络下稳定运行。
-*   **环境适配**：针对 ARM64 (树莓派/M1) 和 AMD64 环境下的 Chromium/Chrome 路径进行了自动适配。
+*   **环境适配**：针对 X86/ARM 的Docker容器进行了自动适配。
 
 ## 🛠️ 环境要求
 
 *   **环境**: 青龙面板 (推荐 v2.10+)
 *   **依赖**:
     *   Python 3.8+
-    *   Chromium / Chrome 浏览器
-    *   ChromeDriver
-*   **Python 库** (青龙面板依赖管理 -> Python 中添加):
-    ```logo
-    selenium
-    requests
-    loguru
-    pyotp
-    ```
-*   **系统包** (青龙面板依赖管理 -> Linux 中添加):
-    ```bash
-    chromium
-    chromium-chromedriver
-    ```
-    *(注：部分镜像可能直接集成了 chrome，视具体环境而定)*
+    *   Playwright
 
 ### 💻 SSH 手动安装依赖 (推荐)
 
@@ -48,16 +34,10 @@
     # 注意: 'qinglong' 是您的容器名，如果不确定请使用 docker ps 查看
     ```
 
-2.  **安装 Linux 系统依赖**
+2.  **安装环境依赖**
     ```bash
-    apt update
-    apt install -y chromium chromium-driver
-    ```
-    *(如果是 Debian/Ubuntu 环境，请使用 `apt-get install chromium-driver`)*
-
-3.  **安装 Python 依赖**
-    ```bash
-    pip3 install selenium requests loguru pyotp
+    pip install -U playwright
+    playwright install chromium
     ```
 
 ## ⚙️ 环境变量配置
@@ -105,13 +85,13 @@ user1@gmail.com#主号----pass1----SECRET1&user2@qq.com#小号----pass2----SECRE
 
 1.  将脚本 `clawcloud_arm64.py` 添加到青龙面板的脚本库或直接上传。
 2.  添加定时任务：
-    *   命令：`task clawcloud_auto_live.py`
+    *   命令：`task clawcloud_playwright_auto.py`
     *   定时：`0 12 * * 5` (每周五自动运行一次)
 3.  点击运行日志，查看执行情况。
 
 ## 📂 文件结构
 
-*   `clawcloud_arm64.py`: 主脚本文件
+*   `clawcloud_playwright_auto.py`: 主脚本文件
 *   `cookies_xxx.json`: 脚本自动生成的 Cookie 缓存文件 (自动生成，无需管理)
 *   `*.png`: 运行过程中生成的临时截图 (脚本运行结束会自动清理)
 
@@ -119,8 +99,6 @@ user1@gmail.com#主号----pass1----SECRET1&user2@qq.com#小号----pass2----SECRE
 
 1.  **报错 `Network unreachable`**
     *   请检查是否配置了 `CLAW_PROXY`。国内网络直连 Google/GitHub/Telegram 通常不通。
-2.  **报错 `WebDriverException: Session not created`**
-    *   通常是 Chrome 和 ChromeDriver 版本不匹配，或未安装 Chromium。请检查青龙面板的 Linux 依赖是否安装了 `chromium` 和 `chromium-chromedriver`。
-3.  **2FA 登录失败**
+2.  **2FA 登录失败**
     *   请确保 `totp_secret` 是正确的 Base32 密钥字符串（通常是添加 Authenticator 时显示的密钥）。不要填 6 位动态码。
 
